@@ -1,12 +1,13 @@
 # Voice IQ API (MaM)
 
-One FastAPI service combines voice biometrics and age/gender profiling. Profiling uses the **MaM** CNN (Multi-Attention Module, [Anvarjon/Age-Gender-Classification](https://github.com/Anvarjon/Age-Gender-Classification)) instead of VoxProfile. The UI is served from the same origin, so the browser sends each selected recording to the same API host.
+One FastAPI service combines voice biometrics and age/gender profiling. Profiling uses the **MaM** CNN (Multi-Attention Module, [Anvarjon/Age-Gender-Classification](https://github.com/Anvarjon/Age-Gender-Classification)) .
 
 Everything runs on CPU. MaM is a small CNN on a 64×64 spectrogram, and the speaker engine is CPU-only, so no GPU or CUDA image is needed.
 
 ## MaM weights
 
 The trained weights in `age_gender_models/` are copied into the image at `/models` at build time, so Cloud Run needs no extra storage for them. These are the files published by the MaM author:
+using this link : https://onedrive.live.com/?id=%2Fpersonal%2F68e2d26b1af9e5d2%2FDocuments%2FPrivate%2FPhD%2FResearch%2FCode%2Fage%5Fgender%5Fmodels%2Ezip&listurl=%2Fpersonal%2F68e2d26b1af9e5d2%2FDocuments&e=7zmPvM&migratedtospo=true&parent=%2Fpersonal%2F68e2d26b1af9e5d2%2FDocuments%2FPrivate%2FPhD%2FResearch%2FCode&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBdExsLVJwcjB1Sm9oS0o2XzIzNnVLRHVKc0xraEE%5FZT03em1Qdk0&ga=1
 
 ```
 age_gender_models/
