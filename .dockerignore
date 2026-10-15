@@ -8,6 +8,7 @@ __pycache__
 tests
 registry.json
 *.gguf
+env/
 env
 
 
