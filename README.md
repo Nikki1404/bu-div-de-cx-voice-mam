@@ -6,7 +6,7 @@ Everything runs on CPU. MaM is a small CNN on a 64×64 spectrogram, and the spea
 
 ## MaM weights
 
-The trained weights in `age_gender_models/` are copied into the image at `/models` at build time, so Cloud Run needs no extra storage for them. These are the files published by the MaM author:
+The trained weights are downloaded from this repo's Git LFS copy of `age_gender_models.zip` during `docker build`, checked against a SHA-256, and unzipped into the image at `/models`, so neither the VM nor Cloud Run needs the zip or extra storage. Override the source with `--build-arg MAM_WEIGHTS_URL=... --build-arg MAM_WEIGHTS_SHA256=...`. These are the files published by the MaM author:
 using this link : https://onedrive.live.com/?id=%2Fpersonal%2F68e2d26b1af9e5d2%2FDocuments%2FPrivate%2FPhD%2FResearch%2FCode%2Fage%5Fgender%5Fmodels%2Ezip&listurl=%2Fpersonal%2F68e2d26b1af9e5d2%2FDocuments&e=7zmPvM&migratedtospo=true&parent=%2Fpersonal%2F68e2d26b1af9e5d2%2FDocuments%2FPrivate%2FPhD%2FResearch%2FCode&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBdExsLVJwcjB1Sm9oS0o2XzIzNnVLRHVKc0xraEE%5FZT03em1Qdk0&ga=1
 
 ```

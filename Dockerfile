@@ -30,6 +30,17 @@ RUN git clone "${VD_REPO}" /tmp/voice-detect.cpp \
     && curl -fL --retry 3 -o /opt/voicedetect/models/ecapa-tdnn-voxceleb.gguf "${VD_MODEL_URL}" \
     && echo "${VD_MODEL_SHA256}  /opt/voicedetect/models/ecapa-tdnn-voxceleb.gguf" | sha256sum -c -
 
+# ---------------------------------------------------------------- MaM weights
+FROM python:3.11-slim-bookworm AS weights
+
+ARG MAM_WEIGHTS_URL=https://media.githubusercontent.com/media/Nikki1404/bu-div-de-cx-voice-mam/main/age_gender_models.zip
+ARG MAM_WEIGHTS_SHA256=571d224d3edb17c2668f977e55ad86d038d4b9d393ef05036237e89b34b9f24b
+
+RUN python -c "import urllib.request, sys; urllib.request.urlretrieve(sys.argv[1], '/tmp/w.zip')" "${MAM_WEIGHTS_URL}" \
+    && echo "${MAM_WEIGHTS_SHA256}  /tmp/w.zip" | sha256sum -c - \
+    && python -m zipfile -e /tmp/w.zip /opt \
+    && rm /tmp/w.zip
+
 # ---------------------------------------------------------------- runtime
 FROM python:3.11-slim-bookworm
 
@@ -63,7 +74,7 @@ COPY biometrics ./biometrics
 COPY models ./models
 COPY profiling ./profiling
 COPY demo.html ./demo.html
-COPY age_gender_models /models
+COPY --from=weights /opt/age_gender_models /models
 
 RUN useradd --system --uid 10001 --home /app voiceiq \
     && mkdir -p /data /models && chown voiceiq /data
